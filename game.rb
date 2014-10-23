@@ -4,17 +4,16 @@ STDOUT.sync = true
 puts "Welcome to Tic Tac Toe!"
 puts "You can make a move by entering a coordinate eg. 'a1'"
 board = Board.new
+player = 'Player 2'
 
-until board.status == 'complete'
+loop do
   board.draw
-  puts "Player 1: where would you like to move?"
+  player == 'Player 1' ? player = 'Player 2' : player = 'Player 1'
+  puts "#{player}: where would you like to move?"
   position = gets.chomp
-  board.move(position, :p1)
+  board.move(position, player)
   board.check_for_win
-  board.draw
-  puts "Player 2: where would you like to move?"
-  position = gets.chomp
-  board.move(position, :p2)
-  board.check_for_win
+  break if board.status == 'complete'
 end
+board.draw
 puts "Thank you for playing."

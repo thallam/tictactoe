@@ -47,7 +47,7 @@ class Board
     when coordinate[1] == '3' then @row3
     end
 
-    mark = player == :p1 ? 'X' :  'O'
+    mark = player == "Player 1" ? 'X' :  'O'
     if y[x].empty?
       y[x] = mark
     else
@@ -59,7 +59,6 @@ class Board
 
     win1 = "XXX"
     win2 = "OOO"
-    winner = "We have a winner!!!"
 #binding.pry
     case
     when @board[0][1]+@board[0][2]+@board[0][3] == (win1 || win2) then winner
