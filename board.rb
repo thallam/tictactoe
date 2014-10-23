@@ -21,17 +21,23 @@ class Board
     puts drawing
   end
 
-  def move(position)
+  def move(position, player)
     coordinate = []
     coordinate = position.chars #['A', '1']
     x = case
-    when coordinate[0] = 'A' then @row1
-    when coordinate[0] = 'B' then @row2
-    when coordinate[0] = 'C' then @row3
+    when coordinate[0] == 'a' then 1
+    when coordinate[0] == 'b' then 2
+    when coordinate[0] == 'c' then 3
     end
 
-    y = coordinate[1].to_i
-    x[y]= 'X'
+    y = case
+    when coordinate[1] == '1' then @row1
+    when coordinate[1] == '2' then @row2
+    when coordinate[1] == '3' then @row3
+    end
+
+    mark = player == :p1 ? 'X' :  'O'
+    y[x] = mark
 
     self.draw
   end
