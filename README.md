@@ -1,0 +1,3 @@
+
+Run the game file to launch tic tac toe in your terminal.
+This is a work in progress...

@@ -37,8 +37,11 @@ class Board
     end
 
     mark = player == :p1 ? 'X' :  'O'
-    y[x] = mark
-
+    if y[x].empty?
+      y[x] = mark
+    else
+      puts "You can't move there!"
+    end
     self.draw
   end
 end
