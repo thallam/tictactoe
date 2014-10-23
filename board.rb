@@ -1,10 +1,16 @@
 require 'pry'
+require 'terminal-table'
+
 class Board
-  require 'terminal-table'
-  attr_accessor :board
+
+  attr_reader :status
 
   def initialize
+    @status = "in progress"
+
     @table = []
+    @board = []
+
     @row1 = [1,'', '', '']
     @row2 = [2,'', '', '']
     @row3 = [3,'', '', '']
@@ -14,7 +20,12 @@ class Board
     @table << @row2
     @table << :separator
     @table << @row3
+
+    @board << @row1
+    @board << @row2
+    @board << @row3
   end
+
 
   def draw
     drawing = Terminal::Table.new :headings => ['','A', 'B', 'C'],:rows => @table
@@ -40,8 +51,51 @@ class Board
     if y[x].empty?
       y[x] = mark
     else
-      puts "You can't move there!"
+      puts "You can't move there silly! You just lost your turn!"
     end
-    self.draw
   end
+
+  def check_for_win
+
+    win1 = "XXX"
+    win2 = "OOO"
+    winner = "We have a winner!!!"
+#binding.pry
+    case
+    when @board[0][1]+@board[0][2]+@board[0][3] == (win1 || win2) then winner
+    when @board[1][1]+@board[1][2]+@board[1][3] == (win1 || win2) then winner
+    when @board[2][1]+@board[2][2]+@board[2][3] == (win1 || win2) then winner
+
+    when @board[0][1]+@board[1][1]+@board[2][1] == (win1 || win2) then winner
+    when @board[0][2]+@board[1][2]+@board[2][2] == (win1 || win2) then winner
+    when @board[0][3]+@board[1][3]+@board[2][3] == (win1 || win2) then winner
+
+    when @board[0][1]+@board[1][2]+@board[2][3] == (win1 || win2) then winner
+    when @board[0][3]+@board[1][2]+@board[2][1] == (win1 || win2) then winner
+    else
+      puts "Next move..."
+    end
+  end
+
+
+  def winner
+    @status = "complete"
+    puts "We have a winner!!!"
+  end
+
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
