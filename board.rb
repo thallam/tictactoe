@@ -1,9 +1,18 @@
-require 'pry'
-require 'terminal-table'
-require_relative 'invalid_move_exception'
+  require 'pry'
+  require 'terminal-table'
+  require_relative 'invalid_move_exception'
+
 
 # Board represents a tic tac toe board.
 class Board
+  WIN_COMBINATIONS= [
+    [[2,1],[2,2],[2,3]],
+    [[0,1],[1,1],[2,1]],
+    [[0,2],[1,2],[2,2]],
+    [[0,3],[1,3],[2,3]],
+    [[0,1],[1,2],[2,3]],
+    [[0,3],[1,2],[2,1]]
+  ]
 
   attr_reader :status
 
@@ -39,36 +48,32 @@ class Board
     when '3' then @row3
     end
 
-    mark = player == "Player 1" ? 'X' :  'O'
     if y[x].empty?
-      y[x] = mark
+      y[x] = player.name
     else
       raise InvalidMoveException.new "Invalid Move, #{player} tried to move to #{position}"
     end
   end
 
-  def won?
-
-    win1 = "XXX"
-    win2 = "OOO"
-
-    case
-    when @board[0][1]+@board[0][2]+@board[0][3] == (win1 || win2) then return true
-    when @board[1][1]+@board[1][2]+@board[1][3] == (win1 || win2) then return true
-    when @board[2][1]+@board[2][2]+@board[2][3] == (win1 || win2) then return true
-
-    when @board[0][1]+@board[1][1]+@board[2][1] == (win1 || win2) then return true
-    when @board[0][2]+@board[1][2]+@board[2][2] == (win1 || win2) then return true
-    when @board[0][3]+@board[1][3]+@board[2][3] == (win1 || win2) then return true
-
-    when @board[0][1]+@board[1][2]+@board[2][3] == (win1 || win2) then return true
-    when @board[0][3]+@board[1][2]+@board[2][1] == (win1 || win2) then return true
-
-    else
-      false
-    end
+  def winner?(*ary)
+    ary.uniq.count == 1 && ! ary.include?(nil)  && ! ary.include?('')
   end
 
+  def won?
+    # find
+    WIN_COMBINATIONS.each do |e|
+      first = e[0]
+      second = e[1]
+      third = e[2]
+      first_token = @board[first[0]][first[1]]
+      second_token = @board[second[0]][second[1]]
+      third_token = @board[third[0]][third[1]]
+
+      return true if winner?(first_token,second_token,third_token)
+    end
+
+    false
+  end
 
   def draw?
     @board.flatten.none?{|e| e.empty?} && ! won?
