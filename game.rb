@@ -1,10 +1,8 @@
-# This game represents two players making their marks on a board until win or draw
-
-
 require_relative 'board'
 require_relative 'player'
 STDOUT.sync = true
 
+# Game represents two players making their marks on a board until win or draw.
 class Game
 
   def initialize
@@ -26,16 +24,19 @@ class Game
       board.render
 
       current_player =  current_player == @player2 ? @player1 : @player2
-        begin
-          puts "#{current_player}: where would you like to move?"
-          position = gets.chomp.downcase
-          board.move(position, current_player.to_s) ;nil #to suppress random token
-        rescue InvalidMoveException => e
-          puts e
-          retry
-        end
-        break if board.won? || board.draw?
+
+      begin
+        puts "#{current_player}: where would you like to move?"
+        position = gets.chomp.downcase
+        board.move(position, current_player.to_s) ;nil #to suppress random token
+
+      rescue InvalidMoveException => e
+        puts e
+        retry
       end
+
+      break if board.won? || board.draw?
+    end
 
 
     board.render

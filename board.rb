@@ -1,6 +1,6 @@
-  require 'pry'
-  require 'terminal-table'
-  require_relative 'invalid_move_exception'
+require 'pry'
+require 'terminal-table'
+require_relative 'invalid_move_exception'
 require_relative 'game'
 
 # Board represents a tic tac toe board.
@@ -25,27 +25,24 @@ class Board
     @table = [@row1, :separator, @row2, :separator, @row3]
   end
 
-
-
   def render
     drawing = Terminal::Table.new :headings => ['','A', 'B', 'C'],:rows => @table
     puts drawing
   end
 
   def move(position, token)
-    #coordinate = []
-    coordinate = position.chars #['A', '1']
+    coordinate = position.chars
     x = case coordinate[0]
-    when 'a' then 1
-    when 'b' then 2
-    when 'c' then 3
-    end
+        when 'a' then 1
+        when 'b' then 2
+        when 'c' then 3
+        end
 
     y = case coordinate[1]
-    when '1' then @row1
-    when '2' then @row2
-    when '3' then @row3
-    end
+        when '1' then @row1
+        when '2' then @row2
+        when '3' then @row3
+        end
 
     if y[x].empty?
       y[x] = token
@@ -59,7 +56,6 @@ class Board
   end
 
   def won?
-    # find
     WIN_COMBINATIONS.each do |e|
       first = e[0]
       second = e[1]
@@ -79,16 +75,3 @@ class Board
   end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

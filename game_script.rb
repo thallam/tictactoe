@@ -1,4 +1,4 @@
-# This game represents two players making their marks on a board until win or draw
+#!/usr/bin/env ruby
 
-load 'game.rb'
+require_relative 'game'
 game = Game.new
