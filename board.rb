@@ -1,7 +1,7 @@
   require 'pry'
   require 'terminal-table'
   require_relative 'invalid_move_exception'
-
+require_relative 'game'
 
 # Board represents a tic tac toe board.
 class Board
@@ -21,7 +21,6 @@ class Board
     @row2 = ['2','', '', '']
     @row3 = ['3','', '', '']
 
-
     @board = [@row1 , @row2 , @row3]
     @table = [@row1, :separator, @row2, :separator, @row3]
   end
@@ -33,7 +32,7 @@ class Board
     puts drawing
   end
 
-  def move(position, player)
+  def move(position, token)
     #coordinate = []
     coordinate = position.chars #['A', '1']
     x = case coordinate[0]
@@ -49,7 +48,7 @@ class Board
     end
 
     if y[x].empty?
-      y[x] = player.name
+      y[x] = token
     else
       raise InvalidMoveException.new "Invalid Move, #{player} tried to move to #{position}"
     end
